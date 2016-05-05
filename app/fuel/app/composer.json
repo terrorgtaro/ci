@@ -1,0 +1,11 @@
+{
+    "require-dev": {
+        "phpunit/phpunit": "5.3.*",
+        "squizlabs/php_codesniffer": "2.*",
+        "phpmd/phpmd" : "2.4.*",
+        "eviweb/fuelphp-phpcs":"1.0.*"
+    },
+    "config": {
+        "vendor-dir": "./vendor"
+    }
+}

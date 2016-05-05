@@ -1,0 +1,81 @@
+CREATE DATABASE <%= @database %> DEFAULT CHARACTER SET=utf8;
+
+use <%= @database %>;
+GRANT ALL PRIVILEGES ON <%= @database %>.* TO <%= @user %>@localhost IDENTIFIED BY '<%= @password %>';
+
+FLUSH PRIVILEGES;
+
+CREATE TABLE IF NOT EXISTS <%= @database %>.index_manager (
+	client_id CHAR(3) NOT NULL,
+	index_name VARCHAR(64) NOT NULL,
+	index_counter BIGINT UNSIGNED NOT NULL,
+	create_date DATETIME,
+	update_date DATETIME,
+	PRIMARY KEY (client_id, index_name)
+) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS <%= @database %>.amazon_product (
+	client_id CHAR(3) NOT NULL,
+	sku VARCHAR(40) NOT NULL,
+	standard_price INT,
+	product_name VARCHAR(500),
+	bullet_point_1 VARCHAR(2000),
+	bullet_point_2 VARCHAR(2000),
+	bullet_point_3 VARCHAR(2000),
+	bullet_point_4 VARCHAR(2000),
+	bullet_point_5 VARCHAR(2000),
+	data_hash VARCHAR(1000) BINARY,
+	product_type VARCHAR(40),
+	create_date DATETIME,
+	update_date DATETIME,
+	PRIMARY KEY (client_id, sku)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS <%= @database %>.amazon_sales_price (
+	client_id CHAR(3) NOT NULL,
+	sku VARCHAR(40) NOT NULL,
+	price_change_date DATETIME NOT NULL,
+	sales_price INT,
+	create_date DATETIME,
+	update_date DATETIME,
+	PRIMARY KEY (client_id, sku, price_change_date)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS <%= @database %>.amazon_data_hash_work (
+	client_id CHAR(3) NOT NULL,
+	sku VARCHAR(40) NOT NULL,
+	data_hash VARCHAR(1000) BINARY,
+	create_date DATETIME,
+	PRIMARY KEY (client_id, sku)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS <%= @database %>.amazon_reserved_price_change (
+	id bigint(20) NOT NULL AUTO_INCREMENT,
+	client_id char(3) NOT NULL,
+	sku varchar(40) NOT NULL,
+	exec_date datetime NOT NULL,
+	price_change_date datetime NOT NULL,
+	standard_price int(11) NOT NULL,
+	sale_start_date datetime,
+	sale_end_date datetime,
+	sale_price int(11),
+	send_flag tinyint(1) NOT NULL DEFAULT 0,
+	send_datetime datetime,
+	delete_flag tinyint(1) NOT NULL DEFAULT 0,
+	create_date datetime,
+	update_date datetime,
+	PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS <%= @database %>.amazon_proper_price (
+	client_id CHAR(3) NOT NULL,
+	sku VARCHAR(40) NOT NULL,
+	proper_price INT,
+	create_date DATETIME,
+	update_date DATETIME,
+	PRIMARY KEY (client_id, sku)
+) ENGINE=InnoDB;
+
+# Last modify 2016.03.27
+

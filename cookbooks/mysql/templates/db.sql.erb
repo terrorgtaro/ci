@@ -1,0 +1,8 @@
+CREATE DATABASE <%= @database %> DEFAULT CHARACTER SET=utf8;
+
+use <%= @database %>;
+GRANT ALL PRIVILEGES ON <%= @database %>.* TO <%= @user %>@localhost IDENTIFIED BY '<%= @password %>';
+
+FLUSH PRIVILEGES;
+
+# Last modify 2016.03.27
